@@ -1,6 +1,3 @@
-const jwt = require('jsonwebtoken');
-
-const currentUser = require('../lib/currentUser');
 const userSerializer = require('../serializers/user');
 const User = require('../models/user');
 
@@ -10,21 +7,15 @@ exports.index = async (req, res) => {
   res.json({ users: await Promise.all(serializedUsers) });
 };
 
-exports.me = async (req, res) => {
-  const token = req.headers.jwt;
-  const user = await currentUser(token);
-  const serializedUser = await userSerializer(user);
-  res.json({ user: serializedUser });
-};
-
-exports.create = async (req, res) => {
+exports.create = async (req, res, next) => {
   const user = await User.create(req.body);
-  if (user.errors) {
-    res.json({ user });
-  } else {
+  try {
     const serializedUser = await userSerializer(user);
-    const token = jwt.sign({ user: serializedUser }, process.env.JWT_SECRET);
-    res.json({ jwt: token, user: serializedUser });
+    res.json({ user: serializedUser });
+  } catch (e) {
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
   }
 };
 
@@ -40,16 +31,14 @@ exports.show = async (req, res, next) => {
   }
 };
 
-exports.update = async (req, res) => {
-  const updatedUser = await User.update({
-    ...req.body,
-    ...{ id: req.params.id },
-  });
+exports.update = async (req, res, next) => {
+  try {
+    const taskFieldsToUpdate = { ...req.body };
+    const updatedUserInfo = await User.update(taskFieldsToUpdate);
 
-  if (updatedUser.errors) {
-    res.json({ user: updatedUser });
-  } else {
-    const serializedUser = await userSerializer(updatedUser);
+    const serializedUser = await userSerializer(updatedUserInfo);
     res.json({ user: serializedUser });
+  } catch (err) {
+    next(err);
   }
 };

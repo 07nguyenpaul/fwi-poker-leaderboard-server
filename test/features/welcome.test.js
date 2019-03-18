@@ -11,7 +11,7 @@ describe('Root of API', () => {
       .get('/')
       .expect(200);
 
-    expect(res.text).toEqual('oh hai');
+    expect(res.text).toEqual('hello');
     expect(res.body).toEqual({});
   });
 });

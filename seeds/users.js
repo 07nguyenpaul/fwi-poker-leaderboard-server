@@ -18,7 +18,7 @@ clearDB().then(async () => {
     firstName: 'Erik',
     lastName: 'Seidel',
     earnings: 33333457,
-    country: 'UK',
+    country: 'GHA',
   });
 
   const john = await User.create({
@@ -27,6 +27,8 @@ clearDB().then(async () => {
     earnings: 23418600,
     country: 'ID',
   });
+
+  const users = [daniel, erik, john];
 
   /* eslint-disable no-console */
   console.log('Created users:');

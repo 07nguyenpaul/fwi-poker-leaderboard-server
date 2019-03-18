@@ -1,5 +1,5 @@
 {
-  "name": "exp-starter-api",
+  "name": "fwi_server",
   "version": "0.0.0",
   "private": true,
   "engines": {
@@ -17,7 +17,6 @@
     "test": "mocha --recursive && (yarn lint || npm lint)"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",

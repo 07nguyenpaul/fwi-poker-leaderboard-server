@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config(); // eslint-disable-line import/no-extraneous-dependencies, global-require
+}
+
 if (process.env.NODE_ENV === 'test') {
   process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
 }

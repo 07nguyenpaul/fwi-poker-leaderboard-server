@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') { require('dotenv').config() }
  */
 
 const app = require('../app');
-const debug = require('debug')('exp-starter-api:server');
+const debug = require('debug')('fwi:server');
 const http = require('http');
 
 /**
